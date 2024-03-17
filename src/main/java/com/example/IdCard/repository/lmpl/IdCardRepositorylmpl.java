@@ -39,7 +39,7 @@ public class IdCardRepositorylmpl implements IdCardRepository {
     @Override
     public IdCard getById(Long id) {
 
-        String query = "SELECT i.id, i.name, i.surname, i.age, i.fin_code, i.series, i.serialnumber FROM vs_learning.id_card i;";
+        String query = "SELECT i.id, i.name, i.surname, i.age, i.fin_code, i.series, i.serialnumber FROM vs_learning.id_card i where i.id=?";
 
         RowMapper<IdCard> rowMapper = new RowMapper<IdCard>() {
             @Override

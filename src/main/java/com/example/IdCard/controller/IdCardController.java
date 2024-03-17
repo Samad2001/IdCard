@@ -18,14 +18,14 @@ public class IdCardController {
         this.idCardService=idCardService;
     }
 
-    @GetMapping
+    @GetMapping("/no-auth")
     public ResponseEntity<List<IdCardResponse>> getAllIdCards(){
        List<IdCardResponse> idCards = idCardService.getAllIdCards();
 
         return ResponseEntity.ok(idCards);
     }
 
-    @GetMapping("/id/{id}")// {id} passvariable ile eyni olmalidi
+    @GetMapping("/no-auth/id/{id}")// {id} pathvariable ile eyni olmalidi
 
     public ResponseEntity<IdCardResponse> getIdCardById(@PathVariable Long id){
      IdCardResponse idCard = idCardService.getIdCardById(id);
