@@ -2,6 +2,7 @@ package com.example.IdCard.repository.lmpl;
 
 import com.example.IdCard.model.entity.IdCard;
 import com.example.IdCard.repository.IdCardRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+//@RequiredArgsConstructor
 public class IdCardRepositorylmpl implements IdCardRepository {
     private final JdbcTemplate jdbcTemplate;
 
