@@ -1,22 +1,22 @@
 package com.example.IdCard.controller;
 
-import com.example.IdCard.model.dto.reponse.IdCardResponse;
+import com.example.IdCard.model.dto.response.IdCardResponse;
 import com.example.IdCard.model.dto.request.IdCardRequest;
 import com.example.IdCard.service.IdCardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("id-cards")
+@RequiredArgsConstructor
 public class IdCardController {
 
     private final IdCardService idCardService;
 
-    public IdCardController(IdCardService idCardService){
-        this.idCardService=idCardService;
-    }
 
     @GetMapping("/no-auth")
     public ResponseEntity<List<IdCardResponse>> getAllIdCards(){
@@ -55,7 +55,8 @@ public class IdCardController {
     }
 
 
-    @DeleteMapping("/id/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/admin/id/{id}")
     public ResponseEntity<Void> deleteIdCardById(@PathVariable Long id){
         idCardService.deleteIdCard(id);
         return ResponseEntity.ok().build();

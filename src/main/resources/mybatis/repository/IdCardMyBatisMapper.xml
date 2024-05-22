@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.IdCard.repository.mapper.IdCardMyBatisRepository">
+
+    <select id="getAll"
+            resultType="IdCard"><!--id getall ona gorediki query adi getAlldi, restype ise entitydeki class namedi-->
+        select
+        <include refid="IdCardBaseColums"></include>
+        from id_card i;
+    </select>
+
+    <select id="findById" resultType="IdCard">
+        SELECT
+        <include refid="IdCardBaseColums"></include>
+        FROM vs_learning.id_card i
+        where i.id=#{id}
+    </select>
+
+    <insert id="insert">
+        insert
+            into vs_learning.id_card(name,
+                        surname,
+                        age,
+                        fin_code,
+                        series,
+                        serialnumber)
+        values(
+        #{name, jdbcType=NVARCHAR},
+        #{surname, jdbcType=NVARCHAR},
+        #{age},
+        #{finCode},
+        #{series},
+        #{serialNumber}
+        )
+    </insert>
+
+    <update id="update">
+
+        update id_card i
+          set   i.name = #{name, jdbcType=NVARCHAR},
+                i.surname =#{surname, jdbcType=NVARCHAR},
+                i.age = #{age},
+                i.fin_code = #{finCode},
+                series = #{series},
+                serialnumber =#{serialNumber}
+        <where>
+            i.id =#{id}
+        </where>
+    </update>
+
+    <update id="updateAge">
+
+        update id_card i
+        set i.age = #{age},
+        <where>
+            i.id =#{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from id_card i
+        <where>
+            i.id = #{id}
+        </where>
+    </delete>
+
+
+    <sql id="IdCardBaseColums">
+        i
+        .
+        id
+        ,
+        i.name,
+        i.surname,
+        i.age,
+        i.fin_code,
+        i.series,
+        i.serialnumber
+    </sql>
+
+
+</mapper>

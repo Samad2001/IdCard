@@ -1,7 +1,7 @@
 package com.example.IdCard.repository.lmpl;
 
 import com.example.IdCard.model.entity.IdCard;
-import com.example.IdCard.repository.IdCardRepository;
+import com.example.IdCard.repository.jdbc.IdCardJdbcRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,17 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-//@RequiredArgsConstructor
-public class IdCardRepositorylmpl implements IdCardRepository {
-    private final JdbcTemplate jdbcTemplate;
-
-    public IdCardRepositorylmpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+@RequiredArgsConstructor
+public class IdCardJdbcRepositorylmpl implements IdCardJdbcRepository {
+     private final JdbcTemplate jdbcTemplate;
 
     @Override
     public List<IdCard> getAll() {

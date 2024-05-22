@@ -1,6 +1,6 @@
 package com.example.IdCard.service;
 
-import com.example.IdCard.model.dto.reponse.IdCardResponse;
+import com.example.IdCard.model.dto.response.IdCardResponse;
 import com.example.IdCard.model.dto.request.IdCardRequest;
 
 import java.util.List;

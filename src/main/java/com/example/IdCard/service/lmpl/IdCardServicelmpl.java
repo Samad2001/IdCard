@@ -1,63 +1,78 @@
 package com.example.IdCard.service.lmpl;
 
 import com.example.IdCard.mapper.IdCardMapper;
-import com.example.IdCard.model.dto.reponse.IdCardResponse;
+import com.example.IdCard.model.dto.response.IdCardResponse;
 import com.example.IdCard.model.dto.request.IdCardRequest;
 import com.example.IdCard.model.entity.IdCard;
-import com.example.IdCard.repository.IdCardRepository;
+import com.example.IdCard.repository.mapper.IdCardMyBatisRepository;
 import com.example.IdCard.service.IdCardService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class IdCardServicelmpl implements IdCardService {
 
-    private IdCardMapper idCardMapper;
-    private IdCardRepository idCardRepository;
-    public IdCardServicelmpl(IdCardMapper idCardMapper,IdCardRepository idCardRepositor){
-        this.idCardMapper=idCardMapper;
-        this.idCardRepository=idCardRepositor;
-    }
+    private final IdCardMapper idCardMapper;
+    private final IdCardMyBatisRepository idCardMyBatisRepository;
 
     @Override
     public List<IdCardResponse> getAllIdCards() {
+//
+//        List<IdCard> idCards = idCardMyBatisRepository.findAll();
+//        List<IdCardResponse> idCardResponseList = idCardMapper.toIdCardResponselist(idCards);
 
-        List<IdCard> idCards = idCardRepository.getAll();// This line calls a method named getAll() on a idCardRepository object.
-        List<IdCardResponse> idCardResponseList= idCardMapper.toIdCardResponselist(idCards);//This method converts the list of IdCard objects into a list of IdCardResponse objects
-
+        List<IdCardResponse> idCardResponseList = new ArrayList<>();
+        IdCardResponse idCardResponse = new IdCardResponse();
+        idCardResponse.setName("Murad");
+        idCardResponse.setId(2L);
+        idCardResponse.setFinCode("7cdhsq1");
+        idCardResponseList.add(idCardResponse);
         return idCardResponseList;
     }
 
     @Override
     public IdCardResponse getIdCardById(Long id) {
-        IdCard idCard = idCardRepository.getById(id);
+        Optional<IdCard> idCardOptional = idCardMyBatisRepository.findById(id);
 
-        return idCardMapper.toIdCardResponse(idCard);
+        return idCardOptional
+                .map(idCardMapper::toIdCardResponse)
+                .orElse(null);
     }
 
     @Override
     public void addIdCard(IdCardRequest idCardRequest) {
-       IdCard idCard = idCardMapper.toIdCard(idCardRequest);
-        idCardRepository.insert(idCard);
+        log.info("AddIdCard request received. IdCardRequest: {}", idCardRequest);
+        IdCard idCard = idCardMapper.toIdCard(idCardRequest);
+//        log.info("IdCardRequest mapped to IdCard. IdCard: {}", idCard);
+
+        idCardMyBatisRepository.insert(idCard);
+        log.info("Add process was successful");
+//        log.warn("just  warning {}", idCardRequest);
+//        log.error("just error {}", idCardRequest);
     }
 
     @Override
     public void updateIdCard(Long id, IdCardRequest idCardRequest) {
-     IdCard idCard = idCardMapper.toIdCard(id, idCardRequest);
-     idCardRepository.update(idCard);
+        IdCard idCard = idCardMapper.toIdCard(id, idCardRequest);
+        idCardMyBatisRepository.update(idCard);
     }
 
 
     @Override
     public void updateIdCardAge(Long id, Integer age) {
-        idCardRepository.updateAge(id, age);
+        idCardMyBatisRepository.updateAge(id, age);
     }
 
     @Override
     public void deleteIdCard(Long id) {
-        idCardRepository.delete(id);
+        idCardMyBatisRepository.delete(id);
     }
 
 
