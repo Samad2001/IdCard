@@ -32,7 +32,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     //gelen tokeni yoxlayiriq
         String authorization = request.getHeader("Authorization");
 
-        if(Objects.isNull(authorization) || !authorization.startsWith("Bearer ")) {//startsWith Bearer ile baslayib baslamadigin yoxlayiriq cunki bu halda tokenmiz islemiyecek
+        if(Objects.isNull(authorization) || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
