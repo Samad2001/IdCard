@@ -21,7 +21,7 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class AuthorizationFilter extends OncePerRequestFilter { //her request geldikde doFilterInternal metodunun icindeki proseden kececek (yeni gelen tokeni yoxlayacayiq)
+public class AuthorizationFilter extends OncePerRequestFilter { 
 
 
    private final JwtProvider jwtProvider;
